@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 
-const { dbConnection } = require('../database/MongoConnection');
+const { dbConnection1 } = require('../database/MongoConnection');
 const { bdmysql } = require('../database/MySqlConnection');
 
 class Server {
@@ -10,6 +10,17 @@ class Server {
         this.port = process.env.PORT;
 
         this.pathsMySql = {
+            auth: '/login',
+            usuarios: '/usuarios',
+            heroes: '/heroes',
+            peliculas: '/peliculas',
+            castingPelicula: '/casting',
+            imagenes: '/imagenes',
+            imgHeroe: '/imgHeroe',
+            imgPeliculas: '/imgPeliculas'
+        }
+
+        this.pathsMongo = {
             auth: '/login',
             usuarios: '/usuarios',
             heroes: '/heroes',
@@ -29,7 +40,8 @@ class Server {
         */
 
         //Aqui me conecto a la BD
-        this.dbConnection();
+        //this.dbConnection();
+        this.dbConnection1();
 
         //Middlewares
         this.middlewares();
@@ -48,6 +60,14 @@ class Server {
             console.error('No se pudo Conectar a la BD MySQL', error);
         }
     }
+    async dbConnection1() {
+        try {
+            await dbConnection1.authenticate();
+            console.log('Connection OK a Mongo.');
+        } catch (error) {
+            console.error('No se pudo Conectar a la BD Mongo', error);
+        }
+    }
 
     routes() {
         this.app.use(this.pathsMySql.auth, require('../routes/MySqlAuth'));
@@ -58,6 +78,17 @@ class Server {
         this.app.use(this.pathsMySql.imagenes, require("../routes/MySqlImagenes"));
         this.app.use(this.pathsMySql.imgHeroe, require("../routes/MySqlImgHeroes"));
         this.app.use(this.pathsMySql.imgPeliculas, require("../routes/MySqlImgPeliculas"));
+    }
+
+    routes() {
+        this.app.use(this.pathsMongo.auth, require('../routes/MongoAuth'));
+        this.app.use(this.pathsMongo.usuarios, require('../routes/MongoUsuarios'));
+        this.app.use(this.pathsMongo.heroes, require('../routes/MongoHeroe'));
+        this.app.use(this.pathsMongo.peliculas, require("../routes/MongoPeliculas"));
+        this.app.use(this.pathsMongo.castingPelicula, require("../routes/MongoCastingPelicula"));
+        this.app.use(this.pathsMongo.imagenes, require("../routes/MongoImagenes"));
+        this.app.use(this.pathsMongo.imgHeroe, require("../routes/MongoImgHeroes"));
+        this.app.use(this.pathsMongo.imgPeliculas, require("../routes/MongoImgPeliculas"));
     }
 
     middlewares() {

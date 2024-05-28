@@ -1,6 +1,7 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const HeroeSchema = Schema({
+const HeroeSchema = new Schema({
     nombre: {
         type: String,
         required: [true, 'El nombre es obligatorio'],
@@ -8,7 +9,7 @@ const HeroeSchema = Schema({
     },
     bio: {
         type: String,
-        required: [true, 'La biografia es obligatoria'],
+        required: [true, 'La biografía es obligatoria'],
     },
     img: {
         type: String,
@@ -16,7 +17,7 @@ const HeroeSchema = Schema({
     },
     aparicion: {
         type: Date,
-		required: 'Debe tener una fecha de Aparicion'
+        required: [true, 'Debe tener una fecha de aparición']
     },
     casa: {
         type: String,
@@ -24,10 +25,10 @@ const HeroeSchema = Schema({
     }
 });
 
-
 HeroeSchema.methods.toJSON = function() {
     const { __v, ...data  } = this.toObject();
     return data;
 }
 
-module.exports = model( 'Heroe', HeroeSchema );
+const Heroes = mongoose.model('Heroes', HeroeSchema);
+module.exports = { Heroes };
