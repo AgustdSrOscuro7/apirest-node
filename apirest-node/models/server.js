@@ -85,7 +85,7 @@ class Server {
         this.app.use(this.pathsMongo.usuarios, require('../routes/MongoUsuarios'));
         this.app.use(this.pathsMongo.heroes, require('../routes/MongoHeroe'));
         this.app.use(this.pathsMongo.peliculas, require("../routes/MongoPeliculas"));
-        this.app.use(this.pathsMongo.castingPelicula, require("../routes/MongoCastingPelicula"));
+        this.app.use(this.pathsMongo.castingPelicula, require("../routes/MongoCastingPeliculas"));
         this.app.use(this.pathsMongo.imagenes, require("../routes/MongoImagenes"));
         this.app.use(this.pathsMongo.imgHeroe, require("../routes/MongoImgHeroes"));
         this.app.use(this.pathsMongo.imgPeliculas, require("../routes/MongoImgPeliculas"));
