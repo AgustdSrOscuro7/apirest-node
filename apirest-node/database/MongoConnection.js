@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 
-const dbConnection1 = async() => {
+const mongoconection = async() => {
 
     try {
 
         await mongoose.connect(process.env.MONGODB_CNN,{
-            //useNewUrlParser: true,
-            //useUnifiedTopology: true
-            //useCreateIndex: true,
-            //useFindAndModify: false
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+            useFindAndModify: false
         })
 
         console.log('Base de Datos de Mongo online...')
@@ -22,5 +22,5 @@ const dbConnection1 = async() => {
 }
 
 module.exports  = {
-    dbConnection1
+    mongoconection
 }

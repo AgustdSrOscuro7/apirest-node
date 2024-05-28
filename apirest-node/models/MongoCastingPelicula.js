@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const { Heroes } = require('./MongoHeroes');
+const { Peliculas } = require('./MongoPeliculas');
 
 const castingPeliculaSchema = new Schema({
     Id: {
@@ -18,8 +20,8 @@ const castingPeliculaSchema = new Schema({
       type: String,
       required: true
     },
-    Hero: heroSchema,
-    Pelicula: peliculaSchema
+    Heroes: Heroes.schema,
+    Peliculas: Peliculas.schema
   }, {
     timestamps: false,
     versionKey: false

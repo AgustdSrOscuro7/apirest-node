@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 
-const { dbConnection1 } = require('../database/MongoConnection');
+const { mongoconection } = require('../database/MongoConnection');
 const { bdmysql } = require('../database/MySqlConnection');
 
 class Server {
@@ -41,7 +41,7 @@ class Server {
 
         //Aqui me conecto a la BD
         //this.dbConnection();
-        this.dbConnection1();
+        this.mongoconection();
 
         //Middlewares
         this.middlewares();
@@ -52,17 +52,18 @@ class Server {
 
     }
 
-    async dbConnection() {
+    //async dbConnection() {
+        //try {
+            //await bdmysql.authenticate();
+            //console.log('Connection OK a MySQL.');
+        //} catch (error) {
+            //console.error('No se pudo Conectar a la BD MySQL', error);
+       // }
+    //}
+
+    async mongoconection() {
         try {
-            await bdmysql.authenticate();
-            console.log('Connection OK a MySQL.');
-        } catch (error) {
-            console.error('No se pudo Conectar a la BD MySQL', error);
-        }
-    }
-    async dbConnection1() {
-        try {
-            await dbConnection1.authenticate();
+            await mongoconection();
             console.log('Connection OK a Mongo.');
         } catch (error) {
             console.error('No se pudo Conectar a la BD Mongo', error);
@@ -70,6 +71,7 @@ class Server {
     }
 
     routes() {
+        // Rutas para MySQL
         this.app.use(this.pathsMySql.auth, require('../routes/MySqlAuth'));
         this.app.use(this.pathsMySql.usuarios, require('../routes/MySqlUsuarios'));
         this.app.use(this.pathsMySql.heroes, require('../routes/MySqlHeroe'));
@@ -78,9 +80,8 @@ class Server {
         this.app.use(this.pathsMySql.imagenes, require("../routes/MySqlImagenes"));
         this.app.use(this.pathsMySql.imgHeroe, require("../routes/MySqlImgHeroes"));
         this.app.use(this.pathsMySql.imgPeliculas, require("../routes/MySqlImgPeliculas"));
-    }
-
-    routes() {
+    
+        // Rutas para MongoDB
         this.app.use(this.pathsMongo.auth, require('../routes/MongoAuth'));
         this.app.use(this.pathsMongo.usuarios, require('../routes/MongoUsuarios'));
         this.app.use(this.pathsMongo.heroes, require('../routes/MongoHeroe'));
@@ -90,7 +91,7 @@ class Server {
         this.app.use(this.pathsMongo.imgHeroe, require("../routes/MongoImgHeroes"));
         this.app.use(this.pathsMongo.imgPeliculas, require("../routes/MongoImgPeliculas"));
     }
-
+    
     middlewares() {
         //CORS
         //Evitar errores por Cors Domain Access

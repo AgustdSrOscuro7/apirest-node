@@ -1,6 +1,6 @@
 const { CastingPelicula } = require('../models/MongoCastingPelicula');
 const { Heroes } = require('../models/MongoHeroes');
-const { Pelicula } = require('../models/MongoPeliculas');
+const { Peliculas } = require('../models/MongoPeliculas');
 
 const getCasting = async (req, res) => {
     try {
