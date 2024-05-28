@@ -1,8 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 
-const { mongoconection } = require('../database/MongoConnection');
-const { bdmysql } = require('../database/MySqlConnection');
+const { dbConnection } = require('../database/MongoConnection');
+//const { bdmysql } = require('../database/MySqlConnection');
 
 class Server {
     constructor() {
@@ -41,7 +41,7 @@ class Server {
 
         //Aqui me conecto a la BD
         //this.dbConnection();
-        this.mongoconection();
+        this.dbConnection();
 
         //Middlewares
         this.middlewares();
@@ -61,9 +61,9 @@ class Server {
        // }
     //}
 
-    async mongoconection() {
+    async dbConnection() {
         try {
-            await mongoconection();
+            await dbConnection();
             console.log('Connection OK a Mongo.');
         } catch (error) {
             console.error('No se pudo Conectar a la BD Mongo', error);

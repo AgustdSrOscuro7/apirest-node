@@ -1,39 +1,19 @@
-//const Categoria = require('./categoria');
-//const Producto = require('./producto');
+require('dotenv').config();
 const Role = require('./MongoRole');
 const Server = require('./server');
 const Usuario = require('./MongoUsuario');
 const Heroe = require('./MongoHeroes');
 
-//const Referencia = require('./referencia');
-//const Multimedia = require('./multimedia');
-//const GrupoMultimedia = require('./grupomultimedia');
-//const Proveedor = require('./proveedor');
-//const Marca = require('./marca');
-//const ProveedorMarca = require('./proveedormarca');
-//const Option = require('./opcion');
-//const Optionrole = require('./opcionesrole');
-
+// Importa los modelos de MySQL
 const HeroeMySQL = require('./MySqlHeroes');
 const UsuarioMySQL = require('./MySqlUsuario');
 
 module.exports = {
-    //Categoria,
-    //Producto,
     Role,
     Server,
     Usuario,
-    UsuarioMySQL,
-    
-    //Referencia,
-    //Multimedia,
-    //GrupoMultimedia,
-    //Proveedor,
-    //Marca,
-    //ProveedorMarca,
-    //Option,
-    //Optionrole,
-    Heroe,
-    HeroeMySQL
+    Heroe, // Exporta el modelo de MongoDB
+    HeroeMySQL, // Exporta el modelo de MySQL
+    UsuarioMySQL
+    // Agrega aquí los demás modelos de MongoDB si los tienes
 }
-
