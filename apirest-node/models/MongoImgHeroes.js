@@ -15,6 +15,6 @@ const imgheroeSchema = new Schema({
   versionKey: false
 });
 
-const ImgHeroes = mongoose.model('ImgHeroes', imgheroeSchema);
+const ImgHeroes = mongoose.model('ImgHeroes', imgheroeSchema, "ImgHeroes");
 
 module.exports = { ImgHeroes };

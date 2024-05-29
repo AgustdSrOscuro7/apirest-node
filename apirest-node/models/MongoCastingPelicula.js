@@ -27,6 +27,6 @@ const castingPeliculaSchema = new Schema({
     versionKey: false
   });
   
-  const CastingPelicula = mongoose.model('CastingPelicula', castingPeliculaSchema);
+  const CastingPelicula = mongoose.model('CastingPelicula', castingPeliculaSchema, "CastingPelicula");
   
   module.exports = { CastingPelicula };

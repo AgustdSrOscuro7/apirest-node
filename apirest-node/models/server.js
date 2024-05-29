@@ -9,26 +9,17 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
 
-        this.pathsMySql = {
-            auth: '/login',
-            usuarios: '/usuarios',
-            heroes: '/heroes',
-            peliculas: '/peliculas',
-            castingPelicula: '/casting',
-            imagenes: '/imagenes',
-            imgHeroe: '/imgHeroe',
-            imgPeliculas: '/imgPeliculas'
-        }
+        
 
         this.pathsMongo = {
-            auth: '/login',
-            usuarios: '/usuarios',
-            heroes: '/heroes',
-            peliculas: '/peliculas',
-            castingPelicula: '/casting',
-            imagenes: '/imagenes',
-            imgHeroe: '/imgHeroe',
-            imgPeliculas: '/imgPeliculas'
+            auth: '/api/login',
+            usuarios: '/api/usuarios',
+            heroes: '/api/heroes',
+            peliculas: '/api/peliculas',
+            castingPelicula: '/api/casting',
+            imagenes: '/api/imagenes',
+            imgHeroe: '/api/imgHeroe',
+            imgPeliculas: '/api/imgPeliculas'
         }
 
 
@@ -72,15 +63,7 @@ class Server {
 
     routes() {
         // Rutas para MySQL
-        this.app.use(this.pathsMySql.auth, require('../routes/MySqlAuth'));
-        this.app.use(this.pathsMySql.usuarios, require('../routes/MySqlUsuarios'));
-        this.app.use(this.pathsMySql.heroes, require('../routes/MySqlHeroe'));
-        this.app.use(this.pathsMySql.peliculas, require("../routes/MySqlPeliculas"));
-        this.app.use(this.pathsMySql.castingPelicula, require("../routes/MySqlCastingPelicula"));
-        this.app.use(this.pathsMySql.imagenes, require("../routes/MySqlImagenes"));
-        this.app.use(this.pathsMySql.imgHeroe, require("../routes/MySqlImgHeroes"));
-        this.app.use(this.pathsMySql.imgPeliculas, require("../routes/MySqlImgPeliculas"));
-    
+        
         // Rutas para MongoDB
         this.app.use(this.pathsMongo.auth, require('../routes/MongoAuth'));
         this.app.use(this.pathsMongo.usuarios, require('../routes/MongoUsuarios'));

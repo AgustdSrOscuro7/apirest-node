@@ -30,5 +30,5 @@ HeroeSchema.methods.toJSON = function() {
     return data;
 }
 
-const Heroes = mongoose.model('Heroes', HeroeSchema);
+const Heroes = mongoose.model('Heroes', HeroeSchema, "Heroes");
 module.exports = { Heroes };

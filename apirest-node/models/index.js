@@ -14,6 +14,7 @@ module.exports = {
     Usuario,
     Heroe, // Exporta el modelo de MongoDB
     HeroeMySQL, // Exporta el modelo de MySQL
-    UsuarioMySQL
+    UsuarioMySQL,
+    
     // Agrega aquí los demás modelos de MongoDB si los tienes
 }
