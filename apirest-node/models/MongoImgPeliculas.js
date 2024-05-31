@@ -15,6 +15,6 @@ const imgpeliculaSchema = new Schema({
   versionKey: false
 });
 
-const ImgPeliculas = mongoose.model('ImgPeliculas', imgpeliculaSchema, "ImgPeliculas" );
+const ImgPeliculas = mongoose.model('ImgPelicula', imgpeliculaSchema, 'ImgPeliculas' );
 
 module.exports = { ImgPeliculas };

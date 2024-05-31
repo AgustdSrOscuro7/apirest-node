@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { Heroe} = require("../models");
+const { Heroes } = require('../models/MongoHeroes');
 const { isValidObjectId } = require("../helpers/mongo-verify");
 const { now } = require("mongoose");
 
@@ -9,8 +9,8 @@ const obtenerHeroes = async (req, res = response) => {
 
   try {
     const [total, heroes] = await Promise.all([
-      Heroe.countDocuments(),
-      Heroe.find()
+      Heroes.countDocuments(),
+      Heroes.find()
         .skip(Number(desde))
         //.limit(Number(limite)),
     ]);
@@ -24,7 +24,7 @@ const obtenerHeroes = async (req, res = response) => {
 const obtenerHeroe = async (req, res = response) => {
   const { id } = req.params;
   try {
-    const heroe = await Heroe.findById(id);
+    const heroe = await Heroes.findById(id);
       
     res.json({ Ok: true, resp: heroe });
   } catch (error) {
@@ -41,7 +41,7 @@ const crearHeroe = async (req, res = response) => {
   
   try {
 
-    const heroeDB = await Heroe.findOne({ nombre: body.nombre });
+    const heroeDB = await Heroes.findOne({ nombre: body.nombre });
 
     if (heroeDB) {
       return res.status(400).json({
@@ -65,7 +65,7 @@ const crearHeroe = async (req, res = response) => {
      */
 
     
-    const heroe = new Heroe(body);
+    const heroe = new Heroes(body);
 
     //console.log(heroe);
 
@@ -103,7 +103,7 @@ const actualizarHeroe = async (req, res = response) => {
     }
     */
     
-    const heroe = await Heroe.findByIdAndUpdate(id, data, {
+    const heroe = await Heroes.findByIdAndUpdate(id, data, {
       new: true,
     });
 
@@ -118,7 +118,7 @@ const borrarHeroe = async (req, res = response) => {
   const { id } = req.params;
   try {
 
-    const heroeBorrado = await Heroe.findByIdAndDelete(id);
+    const heroeBorrado = await Heroes.findByIdAndDelete(id);
 
     /*
     const opcionBorrada = await Option.findByIdAndUpdate(

@@ -2,7 +2,7 @@ require('dotenv').config();
 const Role = require('./MongoRole');
 const Server = require('./server');
 const Usuario = require('./MongoUsuario');
-const Heroe = require('./MongoHeroes');
+const Heroes = require('./MongoHeroes');
 
 // Importa los modelos de MySQL
 const HeroeMySQL = require('./MySqlHeroes');
@@ -12,9 +12,9 @@ module.exports = {
     Role,
     Server,
     Usuario,
-    Heroe, // Exporta el modelo de MongoDB
+    Heroes, // Exporta el modelo de MongoDB
     HeroeMySQL, // Exporta el modelo de MySQL
     UsuarioMySQL,
-    
+
     // Agrega aquí los demás modelos de MongoDB si los tienes
 }

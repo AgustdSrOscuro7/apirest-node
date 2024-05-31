@@ -29,6 +29,6 @@ const peliculaSchema = new Schema({
 });
 
 // Crear el modelo de Peliculas
-const Peliculas = mongoose.model('Peliculas', peliculaSchema, "Peliculas");
+const Peliculas = mongoose.model('Pelicula', peliculaSchema, 'Peliculas');
 
 module.exports = { Peliculas };

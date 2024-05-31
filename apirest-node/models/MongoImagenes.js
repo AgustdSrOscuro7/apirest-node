@@ -21,6 +21,6 @@ const imagenSchema = new Schema({
 });
 
 // Crear el modelo de Imagenes
-const Imagenes = mongoose.model('Imagenes', imagenSchema, "Imagenes");
+const Imagenes = mongoose.model('Imagen', imagenSchema, 'Imagenes');
 
 module.exports = { Imagenes };
