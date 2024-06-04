@@ -9,7 +9,7 @@ const HeroeMySQL = require('./MySqlHeroes');
 const UsuarioMySQL = require('./MySqlUsuario');
 
 module.exports = {
-    Role,
+    Role, 
     Server,
     Usuario,
     Heroes, // Exporta el modelo de MongoDB
