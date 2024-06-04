@@ -3,10 +3,7 @@ const { Schema } = mongoose;
 
 // Definir el esquema de Peliculas
 const peliculaSchema = new Schema({
-  Id: {
-    type: Number,
-    required: true
-  },
+  
   Descripcion: {
     type: String,
     required: true

@@ -3,7 +3,7 @@ const { Imagenes } = require('../models/MongoImagenes');
 
 const getImagenes = async (req, res) => {
     try {
-        const imagenes = await Imagenes.find({}, 'descripcion url'); // Solo selecciona estas columnas
+        const imagenes = await Imagenes.find({}, 'Descripcion Url'); // Solo selecciona estas columnas
         res.json({
             ok: true,
             imagenes
@@ -18,12 +18,12 @@ const getImagenes = async (req, res) => {
 };
 
 const createImagen = async (req, res) => {
-    const { descripcion, url } = req.body;
+    const { Descripcion, Url } = req.body;
 
     try {
         const imagen = new Imagenes({
-            descripcion,
-            url
+            Descripcion,
+            Url
         });
 
         await imagen.save();
