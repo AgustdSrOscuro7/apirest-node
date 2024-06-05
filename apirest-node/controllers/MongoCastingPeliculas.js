@@ -37,10 +37,10 @@ const getCastingByPelicula = async (req, res) => {
 };
 
 const createCasting = async (req, res) => {
-    const { personaje, PeliculasId, HeroesId } = req.body;
+    const { Personaje, PeliculasId, HeroesId } = req.body;
 
     try {
-        const casting = new CastingPelicula({ Personaje: personaje, PeliculasId, HeroesId });
+        const casting = new CastingPelicula({ Personaje: Personaje, PeliculasId, HeroesId });
         await casting.save();
 
         res.json({
