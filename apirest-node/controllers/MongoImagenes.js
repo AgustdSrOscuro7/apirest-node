@@ -1,5 +1,6 @@
 const { response } = require('express');
 const { Imagenes } = require('../models/MongoImagenes');
+const mongoose = require('mongoose');
 
 const getImagenes = async (req, res) => {
     try {
@@ -43,31 +44,29 @@ const createImagen = async (req, res) => {
 
 const deleteImagen = async (req, res) => {
     const { id } = req.params;
-
-    try {
-        const imagen = await Imagenes.findById(id);
-
-        if (!imagen) {
-            return res.status(404).json({
-                ok: false,
-                msg: 'No se encontró la imagen'
-            });
-        }
-
-        await imagen.remove();
-
-        res.json({
-            ok: true,
-            msg: 'Imagen eliminada correctamente'
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            ok: false,
-            msg: 'Error al eliminar la imagen'
-        });
+  
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'El id proporcionado no es válido'
+      });
     }
-};
+  
+    try {
+      await Imagenes.deleteOne({ _id: id }); // Delete by ID
+  
+      res.json({
+        ok: true,
+        msg: 'Imagen eliminada correctamente'
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        ok: false,
+        msg: 'Error al eliminar la imagen'
+      });
+    }
+  };
 
 module.exports = {
     getImagenes,

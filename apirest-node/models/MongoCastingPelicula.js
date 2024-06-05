@@ -4,10 +4,7 @@ const { Heroes } = require('./MongoHeroes');
 const { Peliculas } = require('./MongoPeliculas');
 
 const castingPeliculaSchema = new Schema({
-    Id: {
-      type: Number,
-      required: true
-    },
+    
     HeroesId: {
       type: Number,
       required: true

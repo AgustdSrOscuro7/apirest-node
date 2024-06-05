@@ -14,6 +14,7 @@ class Server {
         this.pathsMongo = {
             auth: '/api/login',
             usuarios: '/api/usuarios',
+            user: 'api/user',
             heroes: '/api/heroes',
             peliculas: '/api/peliculas',
             castingPelicula: '/api/casting',
@@ -67,6 +68,7 @@ class Server {
         // Rutas para MongoDB
         this.app.use(this.pathsMongo.auth, require('../routes/MongoAuth'));
         this.app.use(this.pathsMongo.usuarios, require('../routes/MongoUsuarios'));
+        this.app.use(this.pathsMongo.user, require('../routes/MongoUser'));
         this.app.use(this.pathsMongo.heroes, require('../routes/MongoHeroe'));
         this.app.use(this.pathsMongo.peliculas, require("../routes/MongoPeliculas"));
         this.app.use(this.pathsMongo.castingPelicula, require("../routes/MongoCastingPeliculas"));

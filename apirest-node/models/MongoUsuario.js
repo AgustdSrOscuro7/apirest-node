@@ -1,55 +1,48 @@
-const { Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const UsuarioSchema = Schema({
-    nombre:{
+const UsuarioPamiiSchema = Schema({
+    nombre: {
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
-    correo:{
+    correo: {
         type: String,
-        required: [true, 'El correo  es obligatorio'],
+        required: [true, 'El correo es obligatorio'],
         unique: true
     },
-    password:{
+    password: {
         type: String,
         required: [true, 'La Contraseña es obligatoria']
     },
-    img:{
+    img: {
         type: String,
     },
-    /*
-    rol:{
-        type: String,
-        required: true,
-        enum: ['ADMIN_ROLE','USER_ROLE']
-    },
-    */
     rol: {
         type: Schema.Types.ObjectId,
         ref: 'Role',
-        required: [true, 'El role es obligatorio'],
+        required: [true, 'El rol es obligatorio'],
     },
-    estado:{
+    estado: {
         type: Boolean,
         default: true
     },
-    google:{
+    google: {
         type: Boolean,
-        default:false
+        default: false
     },
     fecha_creacion: {
         type: Date,
-		default: Date.now,
-		required: 'Debe tener una fecha de Creacion.'
+        default: Date.now,
+        required: 'Debe tener una fecha de Creación.'
     },
-    fecha_actualizacion: {type: Date},
+    fecha_actualizacion: { type: Date },
 });
 
-//Quita los campos que no quiero ver.
-UsuarioSchema.methods.toJSON = function() {
-    const {__v,password, _id, ...usuario} = this.toObject();
+// Elimina los campos que no quieres mostrar
+UsuarioPamiiSchema.methods.toJSON = function () {
+    const { __v, password, _id, ...usuario } = this.toObject();
     usuario.uid = _id;
     return usuario;
 }
 
-module.exports = model('Usuario', UsuarioSchema);
+module.exports = model('UsuarioPamii', UsuarioPamiiSchema, 'UsuarioPamii');

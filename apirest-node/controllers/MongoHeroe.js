@@ -1,144 +1,109 @@
-const { response } = require("express");
-const { Heroes } = require('../models/MongoHeroes');
-const { isValidObjectId } = require("../helpers/mongo-verify");
-const { now } = require("mongoose");
+const { Heroes } = require('../models/MongoHeroes'); // Ajusta la ruta según sea necesario
+const mongoose = require('mongoose');
 
-const obtenerHeroes = async (req, res = response) => {
-  const { limite = 5, desde = 0 } = req.query;
-  //const query = { estado: true };
-
+// Obtener todos los héroes
+const getHeroes = async (req, res) => {
   try {
-    const [total, heroes] = await Promise.all([
-      Heroes.countDocuments(),
-      Heroes.find()
-        .skip(Number(desde))
-        //.limit(Number(limite)),
-    ]);
-
-    res.json({ Ok: true, total: total, resp: heroes });
-  } catch (error) {
-    res.json({ Ok: false, resp: error });
+    const heroes = await Heroes.find();
+    res.status(200).json(heroes);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
-const obtenerHeroe = async (req, res = response) => {
-  const { id } = req.params;
+// Obtener un héroe por ID
+const getHeroeById = async (req, res) => {
   try {
-    const heroe = await Heroes.findById(id);
-      
-    res.json({ Ok: true, resp: heroe });
-  } catch (error) {
-    res.json({ Ok: false, resp: error });
+    const heroe = await Heroes.findById(req.params.id);
+    if (heroe == null) {
+      return res.status(404).json({ message: 'No se encontró el héroe' });
+    }
+    res.status(200).json(heroe);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
-const crearHeroe = async (req, res = response) => {
-  //const { body } = req.body;
+// Crear un nuevo héroe
+const createHeroe = async (req, res) => {
+  const heroe = new Heroes({
+    Aparicion: req.body.Aparicion,
+    Bio: req.body.Bio,
+    Casa: req.body.Casa,
+    Img: req.body.Img,
+    Nombre: req.body.Nombre
+  });
 
-  const body = req.body;
-
-  //console.log("BODY INICIO",body);
-  
   try {
+    const newHeroe = await heroe.save();
+    res.status(201).json(newHeroe);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
 
-    const heroeDB = await Heroes.findOne({ nombre: body.nombre });
-
-    if (heroeDB) {
-      return res.status(400).json({
-        msg: `El Heroe ${body.nombre}, ya existe`,
-      });
+// Actualizar un héroe por ID
+const updateHeroe = async (req, res) => {
+  try {
+    const heroe = await Heroes.findById(req.params.id);
+    if (heroe == null) {
+      return res.status(404).json({ message: 'No se encontró el héroe' });
     }
 
+    if (req.body.Aparicion != null) {
+      heroe.Aparicion = req.body.Aparicion;
+    }
+    if (req.body.Bio != null) {
+      heroe.Bio = req.body.Bio;
+    }
+    if (req.body.Casa != null) {
+      heroe.Casa = req.body.Casa;
+    }
+    if (req.body.Img != null) {
+      heroe.Img = req.body.Img;
+    }
+    if (req.body.Nombre != null) {
+      heroe.Nombre = req.body.Nombre;
+    }
 
-    //Pasa a mayuscula el dato de la categoria
-    //const nombre = req.body.nombre.toUpperCase();
-
-    // Generar la data a guardar
-    /*
-    const data = {
-        nombre: body.nombre,
-        bio: body.bio,
-        img: body.img,
-        aparicion: body.aparicion,
-        casa: body.casa
-     };
-     */
-
-    
-    const heroe = new Heroes(body);
-
-    //console.log(heroe);
-
-    // Guardar DB
-    await heroe.save();
-
-    //console.log("CREADA",heroe);
-
-    res.status(201).json({ Ok: true, resp: heroe});
-  } catch (error) {
-    console.log("ERROR:INSERTAR",error);
-
-    res.json({ Ok: false, resp: error });
+    const updatedHeroe = await heroe.save();
+    res.status(200).json(updatedHeroe);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };
 
-const actualizarHeroe = async (req, res = response) => {
+// Borrar un héroe por ID
+const deleteHeroe = async (req, res) => {
   const { id } = req.params;
 
-  const data  = req.body;
-
-  console.log(data)
-
-  try {
-
-    /*
-    if (data.nombre) {
-        const heroeDB = await Heroe.findOne({ nombre: data.nombre });
-
-        if (heroeDB) {
-          return res.status(400).json({
-            msg: `El Heroe ${data.nombre}, ya existe`,
-          });
-        }
-    }
-    */
-    
-    const heroe = await Heroes.findByIdAndUpdate(id, data, {
-      new: true,
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+      ok: false,
+      msg: 'El id proporcionado no es válido'
     });
-
-    res.json({ Ok: true, resp: heroe });
-  } catch (error) {
-    console.log("ERROR_MODIFICAR",error);
-    res.json({ Ok: false, resp: error });
   }
-};
 
-const borrarHeroe = async (req, res = response) => {
-  const { id } = req.params;
   try {
+    await Heroes.deleteOne({ _id: id }); // Delete by ID
 
-    const heroeBorrado = await Heroes.findByIdAndDelete(id);
-
-    /*
-    const opcionBorrada = await Option.findByIdAndUpdate(
-      id,
-      { estado: false, fecha_actualizacion: now() },
-      { new: true }
-    );
-    */
-
-    res.json({ Ok: true, resp: heroeBorrado });
+    res.json({
+      ok: true,
+      msg: 'Heroe eliminado correctamente'
+    });
   } catch (error) {
-    console.log("ERROR_BORRADO",error);
-    res.json({ Ok: false, resp: error });
+    console.error(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'Error al eliminar el heroe'
+    });
   }
 };
 
 module.exports = {
-  crearHeroe,
-  obtenerHeroes,
-  obtenerHeroe,
-  actualizarHeroe,
-  borrarHeroe,
+  getHeroes,
+  getHeroeById,
+  createHeroe,
+  updateHeroe,
+  deleteHeroe
 };

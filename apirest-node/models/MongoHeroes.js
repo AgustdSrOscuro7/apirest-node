@@ -1,34 +1,32 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const HeroeSchema = new Schema({
-    aparicion: {
-        type: Date,
-        required: [true, 'Debe tener una fecha de aparición']
-    },
-    bio: {
-        type: String,
-        required: [true, 'La biografía es obligatoria'],
-    },
-    casa: {
-        type: String,
-        required: [true, 'La casa es obligatoria'],
-    },
-    img: {
-        type: String,
-        required: [true, 'La imagen es obligatoria'],
-    },
-    nombre: {
-        type: String,
-        required: [true, 'El nombre es obligatorio'],
-        unique: true
-    },
-});
-
-HeroeSchema.methods.toJSON = function() {
-    const { __v, ...data  } = this.toObject();
-    return data;
+const HeroeSchema = Schema({
+  Aparicion: {
+    type: Date,
+    required: [true, 'La fecha de aparición es obligatoria']
+  },
+  Bio: {
+    type: String,
+    required: [true, 'La biografía es obligatoria']
+  },
+  Casa: {
+    type: String,
+    required: [true, 'La casa es obligatoria']
+  },
+  Img: {
+    type: String,
+    required: [true, 'La URL de la imagen es obligatoria']
+  },
+  Nombre: {
+    type: String,
+    required: [true, 'El nombre es obligatorio'],
+    unique: true
 }
+}, {
+    timestamps: false, // Deshabilitar createdAt y updatedAt
+    versionKey: false  // Deshabilitar __v
+  });
 
 const Heroes = mongoose.model('Heroe', HeroeSchema, 'Heroes');
 module.exports = { Heroes };
